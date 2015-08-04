@@ -3,8 +3,7 @@
   var myApp = angular.module('FormControlFeatureExample2App', ['nya.bootstrap.select']);
 
   myApp.controller('MainController', ['$scope', function($scope){
-    $scope.select2Required = true;
-  $scope.options = [
+    $scope.options = [
     'Alpha',
     'Bravo',
     'Charlie',

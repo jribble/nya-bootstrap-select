@@ -169,10 +169,6 @@ var updateScope = function(scope, index, valueIdentifier, value, keyIdentifier, 
   }
 };
 
-var setElementIsolateScope = function(element, scope) {
-  element.data('isolateScope', scope);
-};
-
 var contains = function(array, element) {
   var length = array.length,
     i;
@@ -335,9 +331,7 @@ nyaBsSelect.provider('nyaBsConfig', function() {
     'en-us': {
       defaultNoneSelection: 'Nothing selected',
       noSearchResult: 'NO SEARCH RESULT',
-      numberItemSelected: '%d item selected',
-      selectAll: 'Select All',
-      deselectAll: 'Deselect All'
+      numberItemSelected: '%d item selected'
     }
   };
 
@@ -427,13 +421,6 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
 
   var NO_SEARCH_RESULT = '<li class="no-search-result"><span>NO SEARCH RESULT</span></li>';
 
-  var ACTIONS_BOX = '<div class="bs-actionsbox">' +
-    '<div class="btn-group btn-group-sm btn-block">' +
-    '<button class="actions-btn bs-select-all btn btn-default">SELECT ALL</button>' +
-    '<button class="actions-btn bs-deselect-all btn btn-default">DESELECT ALL</button>' +
-    '</div>' +
-    '</div>';
-
   return {
     restrict: 'ECA',
     require: ['ngModel', 'nyaBsSelect'],
@@ -472,13 +459,11 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
         dropdownMenu = jqLite(DROPDOWN_MENU),
         searchBox,
         noSearchResult,
-        actionsBox,
         classList,
         length,
         index,
         liElement,
-        localizedText = nyaBsConfig,
-        isMultiple = typeof tAttrs.multiple !== 'undefined';
+        localizedText = nyaBsConfig;
 
       classList = getClassList(tElement[0]);
       classList.forEach(function(className) {
@@ -488,10 +473,10 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
           dropdownToggle.addClass(className);
         }
 
-        if(/btn-(?:lg|sm|xs)/.test(className)) {
-          tElement.removeClass(className);
-          dropdownToggle.addClass(className);
-        }
+        //if(/btn-(?:lg|sm|xs)/.test(className)) {
+        //  tElement.removeClass(className);
+        //  dropdownToggle.addClass(className);
+        //}
 
         if(className === 'form-control') {
           dropdownToggle.addClass(className);
@@ -525,24 +510,6 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
         dropdownMenu.append(noSearchResult);
       }
 
-      if (tAttrs.actionsBox === 'true' && isMultiple) {
-        // set localizedText
-        if (localizedText.selectAllTpl) {
-          ACTIONS_BOX = ACTIONS_BOX.replace('SELECT ALL', localizedText.selectAllTpl);
-        } else if (localizedText.selectAll) {
-          ACTIONS_BOX = ACTIONS_BOX.replace('SELECT ALL', localizedText.selectAll);
-        }
-
-        if (localizedText.deselectAllTpl) {
-          ACTIONS_BOX = ACTIONS_BOX.replace('DESELECT ALL', localizedText.deselectAllTpl);
-        } else if (localizedText.selectAll) {
-          ACTIONS_BOX = ACTIONS_BOX.replace('DESELECT ALL', localizedText.deselectAll);
-        }
-
-        actionsBox = jqLite(ACTIONS_BOX);
-        dropdownContainer.append(actionsBox);
-      }
-
       // set default none selection text
       dropdownToggle.children().eq(0).append(getDefaultNoneSelectionContent());
 
@@ -567,8 +534,7 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
           dropdownContainer = dropdownToggle.next(),
           dropdownMenu = queryChildren(dropdownContainer, ['dropdown-menu', 'inner']),
           searchBox = queryChildren(dropdownContainer, ['bs-searchbox']),
-          noSearchResult = queryChildren(dropdownMenu, ['no-search-result']),
-          actionsBox = queryChildren(dropdownContainer, ['bs-actionsbox']);
+          noSearchResult = queryChildren(dropdownMenu, ['no-search-result']);
 
         if(nyaBsSelectCtrl.valueExp) {
           valueExpFn = function(scope, locals) {
@@ -620,10 +586,14 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
             return;
           }
 
-          /**
-           * Behavior change, since 2.1.0, we don't want to reset model to null or empty array when options' collection is not prepared.
-           */
-          if(Array.isArray(values) && values.length > 0) {
+          if(!values || values.length === 0) {
+            if(isMultiple) {
+              modelValue = [];
+            } else {
+              modelValue = null;
+            }
+          } else {
+
             if(valueExpFn) {
               for(index = 0; index < values.length; index++) {
                 valuesForSelect.push(valueExpFn($scope, values[index]));
@@ -727,18 +697,6 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
             }
           }
         });
-
-        // actions box
-        if ($attrs.actionsBox === 'true' && isMultiple) {
-          actionsBox.find('.bs-select-all').on('click', function () {
-            setAllOptions(true);
-          });
-
-          actionsBox.find('.bs-deselect-all').on('click', function () {
-            setAllOptions(false);
-          });
-        }
-
 
         // live search
         if($attrs.liveSearch === 'true') {
@@ -1040,8 +998,7 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
 
           // focus on selected element
           for(var i = 0; i < dropdownMenu.children().length; i++) {
-            var childElement = dropdownMenu.children().eq(i);
-            if (!childElement.hasClass('not-match') && childElement.hasClass('selected')) {
+            if(dropdownMenu.children().eq(i).hasClass('selected')) {
               return dropdownMenu.children().eq(i)[0];
             }
           }
@@ -1074,58 +1031,6 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
             }
           }
           return null;
-        }
-
-        /**
-         *
-         */
-        function setAllOptions(selectAll) {
-          if (!isMultiple || isDisabled)
-            return;
-
-          var liElements,
-            modelValue,
-            viewValue;
-
-          liElements = dropdownMenu.find('li');
-          if (liElements.length > 0) {
-            modelValue = ngCtrl.$modelValue;
-
-            // make a deep copy enforce ngModelController to call its $render method.
-            // See: https://github.com/angular/angular.js/issues/1751
-            viewValue = Array.isArray(modelValue) ? deepCopy(modelValue) : [];
-
-            for (var i = 0; i < liElements.length; i++) {
-              var nyaBsOption = jqLite(liElements[i]);
-              if (nyaBsOption.hasClass('disabled'))
-                continue;
-
-              var value, index;
-
-              // if user specify the value attribute. we should use the value attribute
-              // otherwise, use the valueIdentifier specified field in target scope
-              value = getOptionValue(nyaBsOption);
-
-              if (typeof value !== 'undefined') {
-                index = indexOf(viewValue, value);
-                if (selectAll && index == -1) {
-                  // check element
-                  viewValue.push(value);
-                  nyaBsOption.addClass('selected');
-                } else if (!selectAll && index != -1) {
-                  // uncheck element
-                  viewValue.splice(index, 1);
-                  nyaBsOption.removeClass('selected');
-                }
-              }
-            }
-
-            // update view value regardless
-            ngCtrl.$setViewValue(viewValue);
-            $scope.$digest();
-
-            updateButtonContent();
-          }
         }
 
         /**
@@ -1192,12 +1097,11 @@ nyaBsSelect.directive('nyaBsSelect', ['$parse', '$document', '$timeout', 'nyaBsC
         function getOptionValue(nyaBsOption) {
           var scopeOfOption;
           if(valueExpFn) {
-            // here we use the scope bound by ourselves in the nya-bs-option.
-            scopeOfOption = nyaBsOption.data('isolateScope');
+            scopeOfOption = nyaBsOption.scope();
             return valueExpFn(scopeOfOption);
           } else {
             if(nyaBsSelectCtrl.valueIdentifier || nyaBsSelectCtrl.keyIdentifier) {
-              scopeOfOption = nyaBsOption.data('isolateScope');
+              scopeOfOption = nyaBsOption.scope();
               return scopeOfOption[nyaBsSelectCtrl.valueIdentifier] || scopeOfOption[nyaBsSelectCtrl.keyIdentifier];
             } else {
               return nyaBsOption.attr('value');
@@ -1484,8 +1388,6 @@ nyaBsSelect.directive('nyaBsOption', ['$parse', function($parse){
             group,
             lastGroup,
 
-            removedClone, // removed clone node, should also remove isolateScope data as well
-
             values = [],
             valueObj; // the collection value
 
@@ -1572,10 +1474,7 @@ nyaBsSelect.directive('nyaBsOption', ['$parse', function($parse){
           // remove DOM nodes
           for( var blockKey in lastBlockMap) {
             block = lastBlockMap[blockKey];
-            removedClone = getBlockNodes(block.clone);
-            // remove the isolateScope data to detach scope from this clone
-            removedClone.removeData('isolateScope');
-            removedClone.remove();
+            getBlockNodes(block.clone).remove();
             block.scope.$destroy();
           }
 
@@ -1594,9 +1493,6 @@ nyaBsSelect.directive('nyaBsOption', ['$parse', function($parse){
               updateScope(block.scope, index, valueIdentifier, block.value, keyIdentifier, block.key, collectionLength, block.group);
             } else {
               $transclude(function nyaBsOptionTransclude(clone, scope) {
-                // in case of the debugInfoEnable is set to false, we have to bind the scope to the clone node.
-                setElementIsolateScope(clone, scope);
-
                 block.scope = scope;
 
                 var endNode = nyaBsOptionEndComment.cloneNode(false);
@@ -1605,6 +1501,7 @@ nyaBsSelect.directive('nyaBsOption', ['$parse', function($parse){
                 jqLite(previousNode).after(clone);
 
                 // add nya-bs-option class
+
                 clone.addClass('nya-bs-option');
 
                 // for newly created item we need to ensure its selected status from the model value.
