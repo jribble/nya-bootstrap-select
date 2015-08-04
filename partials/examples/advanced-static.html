@@ -19,20 +19,20 @@ until an option is re-selected. The attribute <code>update-button-on</code> can 
 <span class="hljs-tag">&lt;/<span class="hljs-title">ol</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">ol</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-select&quot;</span> <span class="hljs-attribute">ng-model</span>=<span class="hljs-value">&quot;units&quot;</span> <span class="hljs-attribute">update-button-on</span>=<span class="hljs-value">&quot;interval&quot;</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-option&quot;</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">&quot;DAY&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>day</span><span class="hljs-expression"><span>{{</span><span class="hljs-variable">interval</span> != 1 ? &#39;<span class="hljs-variable">s</span>&#39; : &#39;&#39;<span>}}</span></span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>day</span><span class="hljs-expression"><span>{{</span><span class="hljs-variable">interval</span> != &#39;1&#39; ? &#39;<span class="hljs-variable">s</span>&#39; : &#39;&#39;<span>}}</span></span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-option&quot;</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">&quot;WEEK&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>week</span><span class="hljs-expression"><span>{{</span><span class="hljs-variable">interval</span> != 1 ? &#39;<span class="hljs-variable">s</span>&#39; : &#39;&#39;<span>}}</span></span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>week</span><span class="hljs-expression"><span>{{</span><span class="hljs-variable">interval</span> != &#39;1&#39; ? &#39;<span class="hljs-variable">s</span>&#39; : &#39;&#39;<span>}}</span></span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-option&quot;</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">&quot;MONTH&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>month</span><span class="hljs-expression"><span>{{</span><span class="hljs-variable">interval</span> != 1 ? &#39;<span class="hljs-variable">s</span>&#39; : &#39;&#39;<span>}}</span></span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>month</span><span class="hljs-expression"><span>{{</span><span class="hljs-variable">interval</span> != &#39;1&#39; ? &#39;<span class="hljs-variable">s</span>&#39; : &#39;&#39;<span>}}</span></span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">ol</span>&gt;</span></span>
 </code></pre>
 
 </file>
 <file name="script.js">
-<pre><code class="lang-javascript"><span class="hljs-variable">$scope</span>.interval=<span class="hljs-number">1</span>;
+<pre><code class="lang-javascript"><span class="hljs-variable">$scope</span>.interval=<span class="hljs-string">&#39;1&#39;</span>;
 <span class="hljs-variable">$scope</span>.units=<span class="hljs-string">&#39;WEEK&#39;</span>;
 </code></pre>
 

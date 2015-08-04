@@ -3,7 +3,7 @@
   var myApp = angular.module('AdvancedStaticExample1App', ['nya.bootstrap.select']);
 
   myApp.controller('MainController', ['$scope', function($scope){
-  $scope.interval=1;
+  $scope.interval='1';
 $scope.units='WEEK';
   }]);
 })(window.angular);
