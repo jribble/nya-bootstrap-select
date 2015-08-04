@@ -6,8 +6,7 @@ until an option is re-selected. The attribute <code>update-button-on</code> can 
 <p>Use the <code>update-button-on</code> attribute on the <code>nya-bs-select</code> element to reflect changes to the static options:</p>
 <example>
 <file name="index.html">
-<pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;alert-info&quot;</span>&gt;</span>Single Selection, model is </span><span class="hljs-expression"><span>{{</span><span class="hljs-variable">model</span><span>}}</span></span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">ol</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-select&quot;</span> <span class="hljs-attribute">ng-model</span>=<span class="hljs-value">&quot;interval&quot;</span>&gt;</span>
+<pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">ol</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-select&quot;</span> <span class="hljs-attribute">ng-model</span>=<span class="hljs-value">&quot;interval&quot;</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-option&quot;</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">&quot;1&quot;</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
@@ -33,8 +32,8 @@ until an option is re-selected. The attribute <code>update-button-on</code> can 
 
 </file>
 <file name="script.js">
-<pre><code class="lang-javascript"><span class="hljs-variable">$script</span>.interval=<span class="hljs-number">1</span>;
-<span class="hljs-variable">$script</span>.units=<span class="hljs-string">&#39;WEEK&#39;</span>;
+<pre><code class="lang-javascript"><span class="hljs-variable">$scope</span>.interval=<span class="hljs-number">1</span>;
+<span class="hljs-variable">$scope</span>.units=<span class="hljs-string">&#39;WEEK&#39;</span>;
 </code></pre>
 
 </file>
