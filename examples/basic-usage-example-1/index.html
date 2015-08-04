@@ -7,31 +7,32 @@
   <link rel="stylesheet" href="../../css/nya-bs-select.css"/>
   <script src="../../js/angular.js"></script>
   <script src="../../js/nya-bs-select.js"></script>
-  <script src=""></script>
+  <script src="script.js"></script>
 </head>
 <body ng-app="BasicUsageExample1App">
   <div ng-controller="MainController">
     <p class="alert-info">Single Selection, model is {{model}}</p>
-<ol class="nya-bs-select" ng-model="interval">
-  <li class="nya-bs-option" value="1">
-    <a>1</a>
+<ol class="nya-bs-select" ng-model="model">
+  <li class="nya-bs-option" value="a">
+    <a>Alpha</a>
   </li>
-  <li class="nya-bs-option" value="2">
-    <a>2</a>
+  <li class="nya-bs-option" value="b">
+    <a>Bravo</a>
   </li>
-  <li class="nya-bs-option" value="3">
-    <a>3</a>
+  <li class="nya-bs-option" value="c">
+    <a>Charlie</a>
   </li>
 </ol>
-<ol class="nya-bs-select" ng-model="units" update-button-on="units">
-  <li class="nya-bs-option" value="DAY">
-    <a>day{{interval != 1 ? 's' : ''}}</a>
+<p class="alert-info">Multiple Selection, model2 is {{model2}}</p>
+<ol class="nya-bs-select" ng-model="model2" multiple>
+  <li class="nya-bs-option" value="a">
+    <a>Alpha</a>
   </li>
-  <li class="nya-bs-option" value="WEEK">
-    <a>week{{interval != 1 ? 's' : ''}}</a>
+  <li class="nya-bs-option" value="b">
+    <a>Bravo</a>
   </li>
-  <li class="nya-bs-option" value="MONTH">
-    <a>month{{interval != 1 ? 's' : ''}}</a>
+  <li class="nya-bs-option" value="c">
+    <a>Charlie</a>
   </li>
 </ol>
   </div>
