@@ -3,6 +3,7 @@
   var myApp = angular.module('AdvancedStaticExample1App', ['nya.bootstrap.select']);
 
   myApp.controller('MainController', ['$scope', function($scope){
-  $scope.model2 = ['b', 'c'];
+  
+
   }]);
 })(window.angular);
