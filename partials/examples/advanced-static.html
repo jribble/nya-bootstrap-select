@@ -4,8 +4,7 @@
 until an option is re-selected. The attribute <code>update-button-on</code> can be placed on the <code>nya-bs-select</code> element to cause the button to update whenever the given expression changes.</p>
 <p>###Static Button Update</p>
 <p>Use the <code>update-button-on</code> attribute on the <code>nya-bs-select</code> element to reflect changes to the static options:</p>
-<example><pre><code class="lang-javascript">
-</code></pre>
+<example>
 <file name="index.html">
 <pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">p</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;alert-info&quot;</span>&gt;</span>Single Selection, model is </span><span class="hljs-expression"><span>{{</span><span class="hljs-variable">model</span><span>}}</span></span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">ol</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-select&quot;</span> <span class="hljs-attribute">ng-model</span>=<span class="hljs-value">&quot;interval&quot;</span>&gt;</span>
@@ -19,7 +18,7 @@ until an option is re-selected. The attribute <code>update-button-on</code> can 
     <span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">ol</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">ol</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-select&quot;</span> <span class="hljs-attribute">ng-model</span>=<span class="hljs-value">&quot;units&quot;</span> <span class="hljs-attribute">update-button-on</span>=<span class="hljs-value">&quot;units&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">ol</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-select&quot;</span> <span class="hljs-attribute">ng-model</span>=<span class="hljs-value">&quot;units&quot;</span> <span class="hljs-attribute">update-button-on</span>=<span class="hljs-value">&quot;interval&quot;</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">&quot;nya-bs-option&quot;</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">&quot;DAY&quot;</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">a</span>&gt;</span>day</span><span class="hljs-expression"><span>{{</span><span class="hljs-variable">interval</span> != 1 ? &#39;<span class="hljs-variable">s</span>&#39; : &#39;&#39;<span>}}</span></span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
@@ -34,6 +33,10 @@ until an option is re-selected. The attribute <code>update-button-on</code> can 
 
 </file>
 <file name="script.js">
+<pre><code class="lang-javascript"><span class="hljs-variable">$script</span>.interval=<span class="hljs-number">1</span>;
+<span class="hljs-variable">$script</span>.units=<span class="hljs-string">&#39;WEEK&#39;</span>;
+</code></pre>
+
 </file>
 </example>
 
